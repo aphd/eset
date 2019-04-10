@@ -2,10 +2,10 @@ import unittest
 from reader import Reader
 
 
-class TestEset(unittest.TestCase):
+class TestReader(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        super(TestEset, self).__init__(*args, **kwargs)
+        super(TestReader, self).__init__(*args, **kwargs)
         self.r = Reader()
 
     def test_get_block(self):

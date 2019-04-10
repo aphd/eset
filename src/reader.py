@@ -31,4 +31,3 @@ class Reader:
 
 if __name__ == '__main__':
     r = Reader()
-    print(print(r.get_tx()))
