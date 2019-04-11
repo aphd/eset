@@ -6,9 +6,11 @@ from writer import Writer
 
 class TestWriter(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        super(TestWriter, self).__init__(*args, **kwargs)
+    def setUp(self):
         self.w = Writer()
+
+    def tearDown(self):
+        pass
 
     def test_write_tx(self):
         outfile = '/'.join(['/tmp', str(uuid.uuid4())])

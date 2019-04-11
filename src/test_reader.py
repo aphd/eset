@@ -4,9 +4,11 @@ from reader import Reader
 
 class TestReader(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        super(TestReader, self).__init__(*args, **kwargs)
+    def setUp(self):
         self.r = Reader()
+
+    def tearDown(self):
+        pass
 
     def test_get_block(self):
         block = self.r.get_block()
