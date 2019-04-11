@@ -22,6 +22,13 @@
 | confirmed | Time at which transaction was included in a block; only present for confirmed transactions. |
 | size | The size of the transaction in bytes. |
 
+## Test
+
+```bash 
+cd src
+python3 -m unittest discover
+```
+
 ## References
 
 1. https://www.blockcypher.com/dev/ethereum/#blockchain
