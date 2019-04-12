@@ -22,6 +22,17 @@
 | confirmed | Time at which transaction was included in a block; only present for confirmed transactions. |
 | size | The size of the transaction in bytes. |
 
+## EthGasStation variables
+
+| Attribute	 | Description |
+| ------------- | ------------- |
+| fastest | Gas to pay to have the transaction confirmed within 1 to 2 blocks time |
+| fast | - |
+| safeLow | - |
+| average | - |
+| block_time | - |
+| blockNum | - |
+
 ## Test
 
 ```bash 
