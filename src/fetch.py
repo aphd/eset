@@ -1,33 +1,43 @@
-from random import randint
-from threading import Timer
 import configparser
 import subprocess
-import time
+from random import randint
+import tokens as cfg
+import os
 
 
 class Fetch:
 
     def __init__(self):
         self.config = configparser.ConfigParser()
-        self.config.read('config.ini')
+        self.output = '-'.join([
+            'output',
+            self.__class__.__name__.replace('Fetch_', '')
+        ])
 
-    def download_file(self, url):
-        file_name = self._get_name_from_url(url)
+        self.config.read('config.ini')
+        if not os.path.exists(self.output):
+            os.makedirs(self.output)
+
+    def curl(self, url, file_signature):
+        file_name = self._get_name_from_url(url, file_signature)
+        url = url + self._get_random_token()
         subprocess.call([
             'curl', url, '-H',
             '.'.join([str(randint(0, 255)) for x in range(4)]),
-            '-o', f.config['FILE']['out_dir'] + file_name
+            '-o', file_name
+        ])
+        return file_name
+
+    def _get_name_from_url(self, url, file_signature):
+        return '/'.join([
+            self.output,
+            file_signature
         ])
 
-    def _get_name_from_url(self, url):
-        # TODO return the file name from the url
-        return '-'.join(['ethgasstation', str(int(time.time()))])
+    def _get_random_token(self):
+        return '?token=' + cfg.tokens[randint(0, len(cfg.tokens) - 1)]
 
 
 if __name__ == '__main__':
     f = Fetch()
-    url = f.config['API']['ethgasstation']
-    number_of_times_each_minute = 4
-    interval = 60 / (number_of_times_each_minute)
-    for i in range(number_of_times_each_minute):
-        Timer(i * interval, f.download_file, [url]).start()
+    print(f._get_random_token())

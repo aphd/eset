@@ -1,2 +1,3 @@
 *.pyc
-src/output
+tokens.py
+src/output-*
