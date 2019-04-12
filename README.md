@@ -1,5 +1,9 @@
 # Empirical Study of Ethereum Transactions (ESET)
 
+## Limitations
+
+Miners rarely post accurate clock times.
+
 ## Blocks variables
 
 | Attribute	 | Description |
