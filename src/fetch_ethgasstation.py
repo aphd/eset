@@ -1,32 +1,20 @@
-from random import randint
-from threading import Timer
-import configparser
-import subprocess
+from fetch import Fetch
 import time
 
 
-class Fetch_ethgasstation:
+class Fetch_ethgasstation(Fetch):
 
     def __init__(self):
-        self.config = configparser.ConfigParser()
-        self.config.read('config.ini')
+        super().__init__()
 
     def download_file(self, url):
-        file_name = self.config['FILE']['out_dir'] + \
-            self._get_name_from_url(url)
-        subprocess.call([
-            'curl', url, '-H',
-            '.'.join([str(randint(0, 255)) for x in range(4)]),
-            '-o', file_name
-        ])
-        return file_name
-
-    def _get_name_from_url(self, url):
-        # TODO return the file name from the url
-        return '-'.join(['ethgasstation', str(int(time.time()))])
+        return self.curl(url, str(int(time.time())))
 
 
 if __name__ == '__main__':
+
+    from threading import Timer
+
     f = Fetch_ethgasstation()
     url = f.config['API']['ethgasstation']
     number_of_times_each_minute = 4

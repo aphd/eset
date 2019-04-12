@@ -11,12 +11,12 @@ class TestReader(unittest.TestCase):
         pass
 
     def test_get_block(self):
-        block = self.r.get_block()
+        block = self.r.get_block(7540127)
         self.assertIsInstance(block, dict)
         self.assertTrue('height' and 'fees' and 'txids' in block)
 
     def test_get_txs_from_block(self):
-        self.assertIsInstance(self.r.get_txs_from_block(), list)
+        self.assertIsInstance(self.r.get_txs_from_block(7540127), list)
 
     def test_get_tx(self):
         tx = self.r.get_tx()
