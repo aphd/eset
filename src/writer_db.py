@@ -5,9 +5,9 @@ from query import Query
 
 class Writer_db(Writer):
 
-    def __init__(self):
+    def __init__(self, fn):
         super().__init__()
-        self.connection = sqlite3.connect(self.config['FILE']['db'])
+        self.connection = sqlite3.connect(fn)
         self.cursor = self.connection.cursor()
         self._create_db()
 
@@ -31,8 +31,12 @@ class Writer_db(Writer):
 
 if __name__ == '__main__':
     from reader_tx import Reader_tx
+    import configparser
     import glob
-    w = Writer_db()
+
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    w = Writer_db(config['FILE']['db'])
     r_tx = Reader_tx()
     values = [r_tx.read_tx(fn) for fn in glob.glob('output-tx/*')]
     w.insert_tx(values)

@@ -1,6 +1,5 @@
 import unittest
 import uuid
-from io import StringIO
 from writer_csv import Writer_csv
 
 
