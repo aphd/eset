@@ -21,13 +21,14 @@ class Query:
             CREATE TABLE IF NOT EXISTS tx
             (
                 block_height INTEGER,
-                hash TEXT PRIMARY KEY,
+                hash TEXT,
                 gas_price INTEGER,
                 gas_used INTEGER,
                 fees INTEGER,
                 received INTEGER,
                 confirmed INTEGER,
-                size INTEGER
+                size INTEGER,
+                PRIMARY KEY (block_height, hash)
             )
         '''
 

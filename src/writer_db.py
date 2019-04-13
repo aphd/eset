@@ -18,10 +18,13 @@ class Writer_db(Writer):
         self.cursor.execute(q.create_ethGasStation_tbl())
         self.connection.commit()
 
-    def insert_tx(self, values):
-        self.cursor.executemany(
-            'INSERT INTO tx VALUES (?,?,?,?,?,?,?,?)', values
-        )
+    def insert_tx(self, rows):
+        try:
+            self.cursor.executemany(
+                'INSERT INTO tx VALUES (?,?,?,?,?,?,?,?)', rows
+            )
+        except sqlite3.IntegrityError as e:
+            print(e, rows[0], rows[1])
         self.connection.commit()
         self.connection.close()
 
