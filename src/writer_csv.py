@@ -20,8 +20,4 @@ class Writer_csv(Writer):
 
 
 if __name__ == '__main__':
-    from reader import Reader
-    r = Reader()
-    w = Writer_csv()
-    print(r.get_tx())
-    print(w.write_tx(w.config['FILE']['df'], r.get_tx()))
+    pass

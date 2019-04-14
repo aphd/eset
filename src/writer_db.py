@@ -30,13 +30,17 @@ class Writer_db(Writer):
 
 
 if __name__ == '__main__':
-    from reader_tx import Reader_tx
+    from fetch_block_tx import Fetch_block_tx
     import configparser
     import glob
+    import re
 
     config = configparser.ConfigParser()
     config.read('config.ini')
     w = Writer_db(config['FILE']['db'])
-    r_tx = Reader_tx()
-    values = [r_tx.read_tx(fn) for fn in glob.glob('output-tx/*')]
+    values = [
+        Fetch_block_tx.get_tx(fn)
+        for fn in glob.glob('output-block_tx/*')
+        if re.search('\d{7}-[a-z0-9]{7}', fn)
+    ]
     w.insert_tx(values)
