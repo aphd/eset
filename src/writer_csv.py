@@ -9,7 +9,6 @@ class Writer_csv(Writer):
         self.df = self.config['FILE']['df']
 
     def _get_tx_transformer(self, tx):
-        # TODO implement a transformer
         tx_transformer = ['block_height', 'received']
         return [tx[key] for key in tx_transformer]
 
@@ -21,8 +20,4 @@ class Writer_csv(Writer):
 
 
 if __name__ == '__main__':
-    from reader import Reader
-    r = Reader()
-    w = Writer_csv()
-    print(r.get_tx())
-    print(w.write_tx(w.config['FILE']['df'], r.get_tx()))
+    pass
