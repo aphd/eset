@@ -19,7 +19,6 @@ class Fetch:
             os.makedirs(self.output)
 
     def curl(self, url, file_signature):
-        # TODO hide the output of curl command
         file_name = self._get_name_from_url(url, file_signature)
         url = url + self._get_random_token()
         subprocess.call([

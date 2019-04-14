@@ -9,7 +9,6 @@ class Writer_csv(Writer):
         self.df = self.config['FILE']['df']
 
     def _get_tx_transformer(self, tx):
-        # TODO implement a transformer
         tx_transformer = ['block_height', 'received']
         return [tx[key] for key in tx_transformer]
 

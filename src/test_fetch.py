@@ -38,7 +38,7 @@ class Test_fetch(unittest.TestCase):
         os.remove(fn)
 
     def test_get_max_id_from_fn(self):
-        # TODO
+        # TODO test_get_max_id_from_fn
         pass
 
 
