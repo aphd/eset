@@ -37,10 +37,6 @@ class Test_fetch(unittest.TestCase):
         self.assertTrue('gas_price' in json)
         os.remove(fn)
 
-    def test_get_max_id_from_fn(self):
-        # TODO test_get_max_id_from_fn
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
