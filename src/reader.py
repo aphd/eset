@@ -19,7 +19,9 @@ class Reader:
         return json.loads(self._open_url(url))
 
     def get_tx(self):
-        return json.loads(self._open_url(self._get_tx_api()))
+        url = self._get_tx_api() + '?token=' + \
+            cfg.tokens[randint(0, len(cfg.tokens) - 1)]
+        return json.loads(self._open_url(url))
 
     def get_txs_from_block(self, block_id):
         return self.get_block(block_id)['txids']
