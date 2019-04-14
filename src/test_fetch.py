@@ -16,10 +16,12 @@ class Test_fetch(unittest.TestCase):
         f = Fetch_ethgasstation()
         url = f.config['API']['ethgasstation']
         fn = f.download_file(url)
-        ofn = open(fn).read()
+        ofn = open(fn)
+        json = ofn.read()
+        ofn.close()
         self.assertTrue(os.path.exists(fn))
-        self.assertTrue('fast' in open(fn).read())
-        self.assertTrue('fastest' in ofn)
+        self.assertTrue('fast' in json)
+        self.assertTrue('fastest' in json)
         os.remove(fn)
 
     def test_download_tx(self):
@@ -27,10 +29,12 @@ class Test_fetch(unittest.TestCase):
         url = f.config['API']['tx'] + \
             'da1e94c9d07b263da3916599e151f1c48afb0736a82748bc6699c80f08391fe6'
         fn = f.download_file(url, 12323)
-        ofn = open(fn).read()
+        ofn = open(fn)
+        json = ofn.read()
+        ofn.close()
         self.assertTrue(os.path.exists(fn))
-        self.assertTrue('confirmed' in ofn)
-        self.assertTrue('gas_price' in ofn)
+        self.assertTrue('confirmed' in json)
+        self.assertTrue('gas_price' in json)
         os.remove(fn)
 
     def test_get_max_id_from_fn(self):

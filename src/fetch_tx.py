@@ -27,7 +27,7 @@ if __name__ == '__main__':
     for i in list(range(5)):
         block_id = f.get_max_id_from_fn('output-tx') + 1
         r = Reader()
-        print(block_id)
+        print('#### block_id #### ', block_id)
         txs = r.get_txs_from_block(block_id)
         for tx in txs:
             f.download_file(f.config['API']['tx'] + tx, block_id)
