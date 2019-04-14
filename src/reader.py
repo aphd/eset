@@ -1,6 +1,8 @@
 import configparser
 import json
+import tokens as cfg
 from urllib.request import Request, urlopen
+from random import randint
 
 
 class Reader:
@@ -11,7 +13,10 @@ class Reader:
         self.hash = '8f39fb4940c084460da00a876a521ef2ba84ad6ea8d2f5628c9f1f8aeb395342'
 
     def get_block(self, block_id):
-        return json.loads(self._open_url(self._get_block_api(block_id)))
+        # TODO code duplication between fetch and reader
+        url = self._get_block_api(block_id) + '?token=' + \
+            cfg.tokens[randint(0, len(cfg.tokens) - 1)]
+        return json.loads(self._open_url(url))
 
     def get_tx(self):
         return json.loads(self._open_url(self._get_tx_api()))
@@ -40,4 +45,4 @@ class Reader:
 
 if __name__ == '__main__':
     r = Reader()
-    r.get_gas_price()
+    r.get_block(1232132)
