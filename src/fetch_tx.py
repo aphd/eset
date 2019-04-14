@@ -1,6 +1,7 @@
 from fetch import Fetch
 from reader import Reader
 import re
+import os
 
 
 class Fetch_tx(Fetch):
@@ -14,14 +15,21 @@ class Fetch_tx(Fetch):
             re.search('.+\/(.+)', url)[1][0:7]
         ]))
 
+    def get_max_id_from_fn(self, dir):
+        return int(max(re.search('^(\d{7})', val)[0]
+                       for val in os.listdir(dir)))
+
 
 if __name__ == '__main__':
+    import time
+    start = time.time()
     f = Fetch_tx()
-    blocks_id = list(range(6819000, 6820000))
-    for block_id in blocks_id:
-        print(block_id)
+    for i in list(range(5)):
+        block_id = f.get_max_id_from_fn('output-tx') + 1
         r = Reader()
+        print(block_id)
         txs = r.get_txs_from_block(block_id)
-        print(len(txs))
         for tx in txs:
             f.download_file(f.config['API']['tx'] + tx, block_id)
+    end = time.time()
+    print(end - start)

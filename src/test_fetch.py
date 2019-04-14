@@ -33,6 +33,10 @@ class Test_fetch(unittest.TestCase):
         self.assertTrue('gas_price' in ofn)
         os.remove(fn)
 
+    def test_get_max_id_from_fn(self):
+        # TODO
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
