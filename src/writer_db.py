@@ -1,9 +1,8 @@
-from writer import Writer
 import sqlite3
 from query import Query
 
 
-class Writer_db(Writer):
+class Writer_db():
 
     def __init__(self, fn):
         super().__init__()
@@ -31,16 +30,13 @@ class Writer_db(Writer):
 
 if __name__ == '__main__':
     from fetch_block_tx import Fetch_block_tx
-    import configparser
     import glob
     import re
 
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    w = Writer_db(config['FILE']['db'])
+    w = Writer_db('db.sqlite3')
     values = [
         Fetch_block_tx.get_tx(fn)
-        for fn in glob.glob('output-block_tx/*')
+        for fn in glob.glob('output-tx-6819000-6819613/*')
         if re.search('\d{7}-[a-z0-9]{7}', fn)
     ]
     w.insert_tx(values)
