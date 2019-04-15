@@ -12,6 +12,7 @@ Miners rarely post accurate clock times.
 | fees  | The total number of fees collected by miners in this block.  |
 | time | Recorded time at which block was built. Note: Miners rarely post accurate clock times. |
 | size | Raw size of block (including header and all transactions) in bytes. |
+| n_tx | Number of transactions |
 
 ## Transactions variables
 
