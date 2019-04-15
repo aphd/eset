@@ -24,8 +24,16 @@ class Fetch_block_tx(Fetch):
     @staticmethod
     def get_tx(fn):
         t = Transformer()
-        tx = json.loads(open(fn).read())
-        tx = t._get_tx_transformed(tx)
+        try:
+            tx = json.loads(open(fn).read())
+        except ValueError as e:
+            print(fn)
+            return False
+        try:
+            tx = t._get_tx_transformed(tx)
+        except:
+            print(fn)
+            return False
         # TODO get these fields from the table schema!
         tx_fields = [
             'block_height',
