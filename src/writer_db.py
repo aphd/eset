@@ -20,10 +20,10 @@ class Writer_db():
     def insert_tx(self, rows):
         try:
             self.cursor.executemany(
-                'INSERT INTO tx VALUES (?,?,?,?,?,?,?,?)', rows
+                'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)', rows
             )
         except sqlite3.IntegrityError as e:
-            print(e, rows[0], rows[1])
+            print('##### sqlite3.IntegrityError ', e)
         self.connection.commit()
         self.connection.close()
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     w = Writer_db('db.sqlite3')
     values = [
         Fetch_block_tx.get_tx(fn)
-        for fn in glob.glob('/tmp/output-block_tx-6824752-6826340/*')
+        for fn in glob.glob('/tmp/output-block_tx_6834287-6840556/*')
         if re.search('\/\d{7}-[a-z0-9]{7}$', fn) and Fetch_block_tx.get_tx(fn)
     ]
     w.insert_tx(values)

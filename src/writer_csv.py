@@ -7,7 +7,7 @@ class Writer_csv():
         super().__init__()
 
     def write_txs(self, out, txs):
-        with open(out, mode='a') as df_file:
+        with open(out, mode='w') as df_file:
             df_writer = csv.writer(
                 df_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for tx in txs:

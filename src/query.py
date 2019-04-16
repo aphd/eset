@@ -46,9 +46,10 @@ class Query:
     def get_txs(self):
         return '''
             SELECT
-                block_height, hash, confirmed - received as waiting_time, gas_price, gas_used, fees 
+                block_height, hash, confirmed - received as waiting_time, gas_price/1000000000 as gas_price_GWei, gas_used 
             FROM
                 tx
+            ORDER BY block_height
         '''
 
 
