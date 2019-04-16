@@ -45,7 +45,11 @@ cd src
 python3 -m unittest discover
 ```
 
-### Statistical data visualization
+## Statistical data visualization
+
+```bash
+bunzip2 txs.csv.bz2
+```
 
 ```python 
 import pandas as pd
