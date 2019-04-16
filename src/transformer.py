@@ -9,7 +9,10 @@ class Transformer():
         return int(time.mktime(dt.timetuple()))
 
     def _get_tx_transformed(self, tx):
+        try:
+            tx['received'] = self._get_unix_ts(tx['received'])
+            tx['confirmed'] = self._get_unix_ts(tx['confirmed'])
+        except KeyError as error:
+            print(tx['hash'])
         tx['hash'] = tx['hash'][0:6]
-        tx['received'] = self._get_unix_ts(tx['received'])
-        tx['confirmed'] = self._get_unix_ts(tx['confirmed'])
         return tx
