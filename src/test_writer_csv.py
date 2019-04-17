@@ -12,14 +12,11 @@ class Test_writer_csv(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_write_tx(self):
+    def test_write_txs(self):
         fn = '/'.join(['/tmp', str(uuid.uuid4())])
-        self.w.write_tx(fn, {
-            'block_height': 1564040,
-            'received': '2016-05-22T12:43:00Z'
-        })
+        self.w.write_txs(fn, [(6819000, '0fbeb1', -252, 50, 52776, 150000)])
         ofn = open(fn)
-        self.assertTrue('1564040,2016-05-22T12:43:00Z' in ofn.read())
+        self.assertTrue('6819000,0fbeb1,-252,50,52776,150000' in ofn.read())
         ofn.close()
         os.remove(fn)
 
