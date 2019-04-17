@@ -29,14 +29,19 @@ class Writer_db():
 
 
 if __name__ == '__main__':
-    from fetch_block_tx import Fetch_block_tx
+
     import glob
     import re
+    import argparse
+    from reader import Reader
 
-    w = Writer_db('db.sqlite3')
-    values = [
-        Fetch_block_tx.get_tx(fn)
-        for fn in glob.glob('/tmp/output-block_tx_6834287-6840556/*')
-        if re.search('\/\d{7}-[a-z0-9]{7}$', fn) and Fetch_block_tx.get_tx(fn)
-    ]
-    w.insert_tx(values)
+    parser = argparse.ArgumentParser(description='...')
+    parser.add_argument('--dir', required=True, help='txs path (/tmp/txs/)')
+    parser.add_argument('--db', required=True, help='db name (db.sqlite3)')
+    w = Writer_db(parser.parse_args().db)
+    r = Reader(parser.parse_args().db)
+    w.insert_tx([
+        tx for tx in [
+            r.get_tx_from_file(fn) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
+        ] if tx
+    ])

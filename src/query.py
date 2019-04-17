@@ -7,12 +7,13 @@ class Query:
         return '''
             CREATE TABLE IF NOT EXISTS ethGasStation
             (
+                timestamp INTEGER,
                 fastest INTEGER,
                 fast INTEGER,
                 safeLow INTEGER,
                 average INTEGER,
-                block_time REAL,
-                blockNum INTEGER
+                blockNum INTEGER,
+                PRIMARY KEY (timestamp)
             )
         '''
 
@@ -24,7 +25,7 @@ class Query:
                 hash TEXT,
                 gas_price INTEGER,
                 gas_used INTEGER,
-                fees INTEGER,
+                gas_limit INTEGER,
                 received INTEGER,
                 confirmed INTEGER,
                 size INTEGER,
@@ -36,17 +37,20 @@ class Query:
         return '''
             CREATE TABLE IF NOT EXISTS block
             (
+                confirmed INTEGER,
                 height INTEGER,
                 fees INTEGER,
-                time INTEGER,
-                size INTEGER
+                size INTEGER,
+                n_tx INTEGER,
+                lowest_gas_price INTEGER,
+                PRIMARY KEY (height)
             )
         '''
 
     def get_txs(self):
         return '''
             SELECT
-                block_height, hash, confirmed - received as waiting_time, gas_price/1000000000 as gas_price_GWei, gas_used 
+                block_height, hash, confirmed - received as waiting_time, gas_price, gas_used , gas_limit
             FROM
                 tx
             ORDER BY block_height
