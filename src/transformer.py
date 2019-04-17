@@ -12,6 +12,7 @@ class Transformer():
         try:
             tx['received'] = self._get_unix_ts(tx['received'])
             tx['confirmed'] = self._get_unix_ts(tx['confirmed'])
+            tx['gas_price'] = int(tx['gas_price'] / 1000000000)
         except KeyError as error:
             print(tx['hash'])
         tx['hash'] = tx['hash'][0:6]

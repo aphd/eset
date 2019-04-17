@@ -1,5 +1,4 @@
 from fetch import Fetch
-from transformer import Transformer
 import re
 import os
 import json
@@ -20,32 +19,6 @@ class Fetch_block_tx(Fetch):
             self.block_id,
             re.search('.+\/(.+)', url)[1][0:7]
         ]))
-
-    @staticmethod
-    def get_tx(fn):
-        t = Transformer()
-        try:
-            tx = json.loads(open(fn).read())
-        except ValueError as e:
-            print(fn)
-            return False
-        try:
-            tx = t._get_tx_transformed(tx)
-        except:
-            print(fn)
-            return False
-        # TODO get these fields from the table schema!
-        tx_fields = [
-            'block_height',
-            'hash',
-            'gas_price',
-            'gas_used',
-            'fees',
-            'received',
-            'confirmed',
-            'size'
-        ]
-        return tuple(tx[key] for key in tx_fields)
 
     def get_txs(self):
         fn = '/'.join([self.output, self.block_id])
