@@ -22,7 +22,11 @@ class Fetch_block_tx(Fetch):
 
     def get_txs(self):
         fn = '/'.join([self.output, self.block_id])
-        return json.loads(open(fn).read())['txids']
+        try:
+            return json.loads(open(fn).read())['txids']
+        except:
+            print('get_txs exception: ' fn)
+            return []
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ class Reader():
         try:
             tx = t._get_tx_transformed(tx)
         except:
-            print(tx_fn)
+            print('_get_tx_transformed exception', tx_fn)
             return False
         return tuple(tx[key] for key in self.tx_columns)
 
