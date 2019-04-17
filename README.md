@@ -8,10 +8,9 @@ Miners rarely post accurate clock times.
 
 | Attribute	 | Description |
 | ------------- | ------------- |
-| timestamp | Recorded time at which block was built.|
+| confirmed | Recorded time at which block was built. Note: Miners rarely post accurate clock times. |
 | height  | The height of the block in the blockchain.  |
 | fees  | The total number of fees collected by miners in this block.  |
-| time | Recorded time at which block was built. Note: Miners rarely post accurate clock times. |
 | size | Raw size of block (including header and all transactions) in bytes. |
 | n_tx | The number of transactions included in the block. |
 | lowest_gas_price |  The lowest gas price accepted by the block. |
@@ -39,7 +38,6 @@ Miners rarely post accurate clock times.
 | fast | - |
 | safeLow | - |
 | average | - |
-| block_time | - |
 | blockNum | - |
 
 ## Test
