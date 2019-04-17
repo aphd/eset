@@ -8,11 +8,13 @@ Miners rarely post accurate clock times.
 
 | Attribute	 | Description |
 | ------------- | ------------- |
+| timestamp | Recorded time at which block was built.|
 | height  | The height of the block in the blockchain.  |
 | fees  | The total number of fees collected by miners in this block.  |
 | time | Recorded time at which block was built. Note: Miners rarely post accurate clock times. |
 | size | Raw size of block (including header and all transactions) in bytes. |
-| n_tx | The number of transactions included in the block |
+| n_tx | The number of transactions included in the block. |
+| lowest_gas_price |  The lowest gas price accepted by the block. |
 
 ## Transactions variables
 
@@ -22,6 +24,7 @@ Miners rarely post accurate clock times.
 | hash  | The hash of the transaction. |
 | gas_price | The price of gas in this transaction. (Wei) |
 | gas_used | The amount of gas used by this transaction. |
+| gas_limit | It is the maximum amount of Gas that a user is willing to pay for confirming a transaction. If not set, default is 21000 gas for external accounts and 80000 gas for contract accounts. |
 | fees | The total number of fees collected by miners in this transaction. Equal to gas_price * gas_used. (Wei) |
 | received | Time this transaction was received by a specific mempool server. |
 | confirmed | Time at which transaction was included in a block; only present for confirmed transactions. |
@@ -31,7 +34,8 @@ Miners rarely post accurate clock times.
 
 | Attribute	 | Description |
 | ------------- | ------------- |
-| fastest | Gas to pay to have the transaction confirmed within 1 to 2 blocks time |
+| timestamp | The time at which the EthGasStation variables are recorded by the server. |
+| fastest | Gas to pay to have the transaction confirmed within 1 to 2 blocks time. |
 | fast | - |
 | safeLow | - |
 | average | - |
@@ -69,3 +73,4 @@ ax = sns.kdeplot(df["waiting_time"], df["gas_price"], shade=True)
 ## References
 
 1. https://www.blockcypher.com/dev/ethereum/#blockchain
+2. https://www.etherchain.org/
