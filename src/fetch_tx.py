@@ -35,8 +35,7 @@ if __name__ == '__main__':
         return int(max(
             re.search('^(\d{7})', val)[0] for val in os.listdir('output-block')
         )) + 1
-    # while True:
-    for i in range(1):
+    while True:
         block_id = get_next_block_id()
         f = Fetch_tx(block_id)
         f_bck = Fetch_block(block_id)

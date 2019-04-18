@@ -22,10 +22,10 @@ class Fetch_block(Fetch):
             if 'Lowest Gas Price:' in line:
                 try:
                     lgp = re.search(
-                        'Lowest Gas Price:</th><td>([0-9]{1,}) GWei', line)[1]
+                        'Lowest Gas Price:</th><td>(\d+(\.\d{1,})?) GWei', line)[1]
                     lowest_gas_price = open(fn, 'w')
                     json.dump(
-                        {'id': self.block_id, 'lowest_gas_price': int(lgp)}, lowest_gas_price)
+                        {'id': self.block_id, 'lowest_gas_price': lgp}, lowest_gas_price)
                 except Exception as e:
                     print('Lowest Gas Price Exception:', e, ' fn:', fn)
         lowest_gas_price.close()
@@ -33,4 +33,4 @@ class Fetch_block(Fetch):
 
 
 if __name__ == '__main__':
-    Fetch_block(6545849).fetch_block_lowest_gas_price()
+    Fetch_block(6545873).fetch_block_lowest_gas_price()
