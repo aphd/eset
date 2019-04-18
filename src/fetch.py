@@ -23,6 +23,7 @@ class Fetch:
         url = url + self._get_random_token()
         subprocess.call([
             'curl', '-s', url, '-H',
+            'X-Forwarded-For: ' +
             '.'.join([str(randint(0, 255)) for x in range(4)]),
             '-o', file_name
         ])
