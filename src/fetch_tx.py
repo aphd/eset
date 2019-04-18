@@ -4,7 +4,7 @@ import os
 import json
 
 
-class Fetch_block_tx(Fetch):
+class Fetch_tx(Fetch):
 
     def __init__(self, block_id=False):
         super().__init__()
@@ -20,22 +20,26 @@ class Fetch_block_tx(Fetch):
             re.search('.+\/(.+)', url)[1][0:7]
         ]))
 
-    def get_txs(self):
-        fn = '/'.join([self.output, self.block_id])
+    def get_txs(self, fn):
         try:
             return json.loads(open(fn).read())['txids']
         except:
-            print('get_txs exception: ' fn)
+            print('get_txs exception: ', fn)
             return []
 
 
 if __name__ == '__main__':
+    from fetch_block import Fetch_block
+
     def get_next_block_id():
         return int(max(
-            re.search('^(\d{7})', val)[0] for val in os.listdir('output-block_tx')
+            re.search('^(\d{7})', val)[0] for val in os.listdir('output-block')
         )) + 1
-    while True:
-        f = Fetch_block_tx(get_next_block_id())
-        f.fetch_block()
-        for tx in f.get_txs():
+    # while True:
+    for i in range(1):
+        block_id = get_next_block_id()
+        f = Fetch_tx(block_id)
+        f_bck = Fetch_block(block_id)
+        f_bck.fetch_block_lowest_gas_price()
+        for tx in f.get_txs(f_bck.fetch_block()):
             f.fetch_tx(f.config['API']['tx'] + tx)
