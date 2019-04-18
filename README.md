@@ -49,6 +49,8 @@ python3 -m unittest discover
 
 ## Statistical data visualization
 
+The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</link>.
+
 ```bash
 bunzip2 txs.csv.bz2
 ```
