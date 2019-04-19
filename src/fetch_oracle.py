@@ -23,6 +23,5 @@ if __name__ == '__main__':
     interval = 60 / (number_of_times_each_minute)
     for i in range(number_of_times_each_minute):
         for oracle in f.oracles:
-            print(oracle)
             Timer(i * interval, f.download_fn,
                   [f.config['API'][oracle], oracle]).start()
