@@ -1,5 +1,6 @@
 import sqlite3
 from query import Query
+import traceback
 
 
 class Reader():
@@ -25,18 +26,12 @@ class Reader():
         import json
         t = Transformer()
         try:
-            tx = json.loads(open(tx_fn).read())
-        except ValueError as e:
-            print('ValueError: ', tx_fn)
-            return False
-        try:
-            tx = t._get_tx_transformed(tx)
-        except:
-            print('_get_tx_transformed exception', tx_fn)
+            tx = t._get_tx_transformed(json.loads(open(tx_fn).read()))
+        except Exception:
+            traceback.print_exc()
             return False
         return tuple(tx[key] for key in self.tx_columns)
 
 
 if __name__ == '__main__':
-    rd = Reader('db.sqlite3')
-    print(rd.get_txs())
+    pass
