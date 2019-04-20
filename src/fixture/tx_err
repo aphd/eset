@@ -1,0 +1,16 @@
+{
+  "block_hash": "19aea7c6d60f2339c893723e22e3c5781f2232f60837d11825b6d522654d3f59",
+  "block_height": 6545880,
+  "block_index": 7,
+  "has": "c01ec79fc958df5cd26ed68b04c6adcd0d56dc877b7f8b8f9901b9975987b0bd",
+  "addresses": [
+    "2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+    "ead721a1ee451d9d819987e50ce89c4e56356339"
+  ],
+  "total": 0,
+  "internal_txids": [
+    "850a03ed2d01f6d33019fe5c58fb716cf70ac2509c001fdf1fa0ce22789b534f"
+  ],
+  "confirmations": 1045072,
+  "confidence": 1
+}
