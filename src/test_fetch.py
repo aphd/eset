@@ -1,6 +1,6 @@
 import unittest
-from fetch_ethgasstation import Fetch_ethgasstation
-from fetch_block_tx import Fetch_block_tx
+from fetch_oracle import Fetch_oracle
+from fetch_tx import Fetch_tx
 import os
 
 
@@ -14,9 +14,9 @@ class Test_fetch(unittest.TestCase):
         pass
 
     def test_download_ethgasstation(self):
-        f = Fetch_ethgasstation()
+        f = Fetch_oracle()
         url = f.config['API']['ethgasstation']
-        fn = f.download_file(url)
+        fn = f.download_fn(url, 'sign')
         ofn = open(fn)
         json = ofn.read()
         ofn.close()
@@ -26,7 +26,7 @@ class Test_fetch(unittest.TestCase):
         os.remove(fn)
 
     def test_download_tx(self):
-        f = Fetch_block_tx(self.block_id)
+        f = Fetch_tx(self.block_id)
         url = f.config['API']['tx'] + self.hash
         fn = f.fetch_tx(url)
         ofn = open(fn)
