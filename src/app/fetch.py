@@ -9,7 +9,7 @@ class Fetch:
 
     def __init__(self):
         self.config = configparser.ConfigParser()
-        self.output = '-'.join([
+        self.output = 'data/' + '-'.join([
             'output',
             self.__class__.__name__.replace('Fetch_', '')
         ])

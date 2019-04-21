@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     def get_next_block_id():
         return int(max(
-            re.search('^(\d{7})', val)[0] for val in os.listdir('output-block')
+            re.search('^(\d{7})', val)[0] for val in os.listdir('data/output-block')
         )) + 1
     while True:
         block_id = get_next_block_id()
