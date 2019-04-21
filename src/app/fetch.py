@@ -1,7 +1,7 @@
 import configparser
 import subprocess
 from random import randint
-import tokens as cfg
+import app.tokens as cfg
 import os
 
 
