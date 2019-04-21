@@ -1,6 +1,6 @@
 import unittest
-from fetch_oracle import Fetch_oracle
-from fetch_tx import Fetch_tx
+from app.fetch_oracle import Fetch_oracle
+from app.fetch_tx import Fetch_tx
 import os
 
 

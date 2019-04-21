@@ -1,4 +1,4 @@
-from fetch import Fetch
+from app.fetch import Fetch
 import time
 
 
