@@ -9,12 +9,12 @@ class Fetch:
 
     def __init__(self):
         self.config = configparser.ConfigParser()
-        self.output = '-'.join([
+        self.output = 'data/' + '-'.join([
             'output',
             self.__class__.__name__.replace('Fetch_', '')
         ])
 
-        self.config.read('config.ini')
+        self.config.read('./app/config.ini')
         if not os.path.exists(self.output):
             os.makedirs(self.output)
 

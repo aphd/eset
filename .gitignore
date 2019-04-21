@@ -1,6 +1,6 @@
 *.pyc
 tokens.py
-src/output*
+src/data
 
 # jupyter notebook
 *ipynb*

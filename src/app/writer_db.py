@@ -29,11 +29,11 @@ class Writer_db():
 
 
 if __name__ == '__main__':
-
     import glob
     import re
     import argparse
-    from reader import Reader
+    from app.reader import Reader
+    from app.transformer import Transformer
 
     parser = argparse.ArgumentParser(description='...')
     parser.add_argument('--dir', required=True, help='txs path (/tmp/txs/)')
@@ -42,6 +42,6 @@ if __name__ == '__main__':
     r = Reader(parser.parse_args().db)
     w.insert_tx([
         tx for tx in [
-            r.get_tx_from_file(fn) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
+            r.get(fn, Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
         ] if tx
     ])
