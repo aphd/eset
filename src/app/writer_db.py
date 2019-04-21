@@ -33,15 +33,29 @@ if __name__ == '__main__':
     import glob
     import re
     import argparse
-    from reader import Reader
+    from app.reader import Reader
+    from app.transformer import Transformer
 
     parser = argparse.ArgumentParser(description='...')
     parser.add_argument('--dir', required=True, help='txs path (/tmp/txs/)')
     parser.add_argument('--db', required=True, help='db name (db.sqlite3)')
     w = Writer_db(parser.parse_args().db)
     r = Reader(parser.parse_args().db)
+
+    # print(r.get('/tmp/output-tx-6896884-6933380/6896885-4e90caf', Transformer().tx_trafo))
+
+    # for fn in glob.glob(parser.parse_args().dir + '*')[0:100]:
+    #     if re.search('\/\d{7}-[a-z0-9]{7}$', fn):
+    #         print(r.get(fn, Transformer().tx_trafo))
+
+    # print([
+    #     tx for tx in [
+    #         r.get(fn, Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*')[0:10] if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
+    #     ] if tx
+    # ])
+
     w.insert_tx([
         tx for tx in [
-            r.get_tx_from_file(fn) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
+            r.get(fn, Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
         ] if tx
     ])
