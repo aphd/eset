@@ -25,7 +25,7 @@ class Test_fetch(unittest.TestCase):
         self.assertTrue('fastest' in json)
         os.remove(fn)
 
-    def test_download_tx(self):
+    def test_fetch_tx(self):
         f = Fetch_tx(self.block_id)
         url = f.config['API']['tx'] + self.hash
         fn = f.fetch_tx(url)

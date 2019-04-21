@@ -45,6 +45,7 @@ Miners rarely post accurate clock times.
 ```bash 
 cd src
 export PYTHONPATH="${PYTHONPATH}:app"
+cp app/tokens-sample.py app/tokens.py
 python3 -m unittest discover
 ```
 

@@ -6,7 +6,7 @@ import sqlite3
 class Transformer():
 
     def __init__(self):
-        self.connection = sqlite3.connect('./data/db.sqlite3')
+        self.connection = sqlite3.connect('./test/fixture/db.sqlite3')
         self.cursor = self.connection.cursor()
 
     def _get_unix_ts(self, date):
