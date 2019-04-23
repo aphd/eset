@@ -42,7 +42,7 @@ class Query:
                 fees INTEGER,
                 size INTEGER,
                 n_tx INTEGER,
-                lowest_gas_price INTEGER,
+                lowest_gas_price REAL,
                 PRIMARY KEY (height)
             )
         '''
