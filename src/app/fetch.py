@@ -37,8 +37,3 @@ class Fetch:
 
     def _get_random_token(self):
         return '?token=' + cfg.tokens[randint(0, len(cfg.tokens) - 1)]
-
-
-if __name__ == '__main__':
-    f = Fetch()
-    print(f._get_random_token())

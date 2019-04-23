@@ -64,7 +64,3 @@ class Query:
                 block
             ORDER BY height
         '''
-
-
-if __name__ == '__main__':
-    pass

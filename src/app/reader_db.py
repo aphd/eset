@@ -12,7 +12,3 @@ class Reader_db(Reader):
         columns = next(zip(*self.cursor.description))
         rows.insert(0, columns)
         return rows
-
-
-if __name__ == '__main__':
-    pass

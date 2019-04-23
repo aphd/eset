@@ -16,7 +16,3 @@ class Reader_fn(Reader):
         except Exception:
             traceback.print_exc()
         return False
-
-
-if __name__ == '__main__':
-    pass
