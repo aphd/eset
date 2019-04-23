@@ -1,5 +1,5 @@
 import sqlite3
-from query import Query
+from app.query import Query
 import traceback
 import json
 
