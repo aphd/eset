@@ -56,6 +56,11 @@ class Query:
             ORDER BY block_height
         '''
 
-
-if __name__ == '__main__':
-    pass
+    def get_blocks(self):
+        return '''
+            SELECT
+                received_time, height, fees, size, n_tx, lowest_gas_price
+            FROM
+                block
+            ORDER BY height
+        '''
