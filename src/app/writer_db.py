@@ -29,14 +29,14 @@ if __name__ == '__main__':
     import glob
     import re
     import argparse
-    from app.reader import Reader
+    from app.reader_fn import Reader_fn
     from app.transformer import Transformer
 
     parser = argparse.ArgumentParser(description='...')
     parser.add_argument('--dir', required=True, help='txs path (/tmp/txs/)')
     parser.add_argument('--db', required=True, help='db name (db.sqlite3)')
     w = Writer_db(parser.parse_args().db)
-    r = Reader(parser.parse_args().db)
+    r = Reader_fn()
 
     def insert_tx():
         w.insert([

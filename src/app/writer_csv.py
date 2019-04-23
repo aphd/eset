@@ -13,7 +13,8 @@ class Writer_csv():
 
 
 if __name__ == '__main__':
-    from app.reader import Reader
-    r = Reader('data/db.sqlite3')
-    w_csv = Writer_csv()
-    w_csv.write_txs('data/txs.csv', r.get_txs())
+    from app.reader_db import Reader_db
+    from app.query import Query
+    r = Reader_db('./db.sqlite3')
+    # Writer_csv().write_txs('./txs.csv', r.get(Query().get_txs()))
+    Writer_csv().write_txs('./block.csv', r.get(Query().get_blocks()))
