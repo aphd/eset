@@ -27,6 +27,11 @@ class Transformer():
     def oracle_ec_trafo(self, oracle):
         return [oracle[key] for key in ['safeLow', 'standard', 'fast', 'fastest']]
 
+    def block_trafo(self, block):
+        block['lowest_gas_price'] = int(block['lowest_gas_price'])
+        block['received_time'] = self._get_unix_ts(block['received_time'])
+        return tuple([block[key] for key in self._get_tx_columns('select * from block')])
+
 
 if __name__ == '__main__':
     pass

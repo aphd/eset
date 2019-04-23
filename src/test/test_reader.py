@@ -1,27 +1,25 @@
 import unittest
 from app.reader import Reader
+from app.transformer import Transformer
 
 
 class Test_reader(unittest.TestCase):
 
     def setUp(self):
-        from app.transformer import Transformer
-        self.t = Transformer()
-        self.r = Reader('./data/db.sqlite3')
-        self.dir = './test/fixture/'
+        self.r = Reader('./test/fixture/db.sqlite3')
 
     def tearDown(self):
         pass
 
-    def test_get_tx(self):
-        trafo = self.t.tx_trafo
-        self.assertIsInstance(self.r.get(self.dir + 'tx_ok', trafo), tuple)
-        self.assertFalse(self.r.get(self.dir + 'tx_err', trafo))
-        self.assertFalse(self.r.get('', trafo))
-
-    def test_get_oracle_ec(self):
-        trafo = self.t.oracle_ec_trafo
-        self.assertIsInstance(self.r.get(self.dir + 'oracle_ec', trafo), tuple)
+    def test_get(self):
+        get = self.r.get
+        assertIsInstance = self.assertIsInstance
+        dir = './test/fixture/'
+        t = Transformer()
+        assertIsInstance(get([dir + 'tx_ok'], t.tx_trafo), tuple)
+        assertIsInstance(get([dir + 'oracle_ec'], t.oracle_ec_trafo), tuple)
+        assertIsInstance(get([dir + 'bk', dir + 'bkl'], t.block_trafo), tuple)
+        self.assertFalse(get([dir + 'tx_err'], t.tx_trafo))
 
 
 if __name__ == '__main__':

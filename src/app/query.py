@@ -37,7 +37,7 @@ class Query:
         return '''
             CREATE TABLE IF NOT EXISTS block
             (
-                confirmed INTEGER,
+                received_time INTEGER,
                 height INTEGER,
                 fees INTEGER,
                 size INTEGER,
