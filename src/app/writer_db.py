@@ -1,5 +1,5 @@
 import sqlite3
-from query import Query
+from app.query import Query
 
 
 class Writer_db():
@@ -17,15 +17,12 @@ class Writer_db():
         self.cursor.execute(q.create_ethGasStation_tbl())
         self.connection.commit()
 
-    def insert_tx(self, rows):
+    def insert(self, rows, sql_statement):
         try:
-            self.cursor.executemany(
-                'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)', rows
-            )
+            self.cursor.executemany(sql_statement, rows)
         except sqlite3.IntegrityError as e:
             print('##### sqlite3.IntegrityError ', e)
         self.connection.commit()
-        self.connection.close()
 
 
 if __name__ == '__main__':
@@ -40,8 +37,20 @@ if __name__ == '__main__':
     parser.add_argument('--db', required=True, help='db name (db.sqlite3)')
     w = Writer_db(parser.parse_args().db)
     r = Reader(parser.parse_args().db)
-    w.insert_tx([
-        tx for tx in [
-            r.get(fn, Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
-        ] if tx
-    ])
+
+    def insert_tx():
+        w.insert([
+            tx for tx in [
+                r.get([fn], Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
+            ] if tx
+        ], 'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
+
+    def insert_block():
+        w.insert([
+            block for block in [
+                r.get((fn, fn + '_lgp'), Transformer().block_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}$', fn)
+            ] if block
+        ], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
+
+    insert_block()
+    w.connection.close()

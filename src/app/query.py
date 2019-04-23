@@ -37,12 +37,12 @@ class Query:
         return '''
             CREATE TABLE IF NOT EXISTS block
             (
-                confirmed INTEGER,
+                received_time INTEGER,
                 height INTEGER,
                 fees INTEGER,
                 size INTEGER,
                 n_tx INTEGER,
-                lowest_gas_price INTEGER,
+                lowest_gas_price REAL,
                 PRIMARY KEY (height)
             )
         '''

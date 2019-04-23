@@ -18,15 +18,12 @@ class Test_writer_db(unittest.TestCase):
     def test__create_db(self):
         self.assertIsInstance(self.w.connection, sqlite3.Connection)
         self.assertIsInstance(self.w.cursor, sqlite3.Cursor)
-        self.w.cursor.execute(
-            'SELECT hash from tx'
-        )
-        self.w.cursor.execute(
-            'SELECT height from block'
-        )
-        self.w.cursor.execute(
-            'SELECT fast from ethGasStation'
-        )
+
+    def test_insert(self):
+        self.w.insert([(0, '12sasx3', 1, 2, 3, 0, 0, 4)],
+                      'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
+        self.w.insert([(1, 2, 3, 4, 5, 6)],
+                      'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
 
 
 if __name__ == '__main__':
