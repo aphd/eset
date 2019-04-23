@@ -10,7 +10,7 @@ Miners rarely post accurate clock times.
 | ------------- | ------------- |
 | confirmed | Recorded time at which block was built. Note: Miners rarely post accurate clock times. |
 | height  | The height of the block in the blockchain.  |
-| fees  | The total number of fees collected by miners in this block.  |
+| fees  | The total number of fees collected by miners in this block. (GWei)  |
 | size | Raw size of block (including header and all transactions) in bytes. |
 | n_tx | The number of transactions included in the block. |
 | lowest_gas_price |  The lowest gas price accepted by the block. |
@@ -24,7 +24,7 @@ Miners rarely post accurate clock times.
 | gas_price | The price of gas in this transaction. (Wei) |
 | gas_used | The amount of gas used by this transaction. |
 | gas_limit | It is the maximum amount of Gas that a user is willing to pay for confirming a transaction. If not set, default is 21000 gas for external accounts and 80000 gas for contract accounts. |
-| fees | The total number of fees collected by miners in this transaction. Equal to gas_price * gas_used. (Wei) |
+| fees | The total number of fees collected by miners in this transaction. Equal to gas_price * gas_used. (GWei) |
 | received | Time this transaction was received by a specific mempool server. |
 | confirmed | Time at which transaction was included in a block; only present for confirmed transactions. |
 | size | The size of the transaction in bytes. |
