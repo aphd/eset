@@ -18,7 +18,7 @@ class Test_reader(unittest.TestCase):
         dir = './test/fixture/'
         assertIsInstance(get([dir + 'tx_ok'], Trafo('tx').get()), tuple)
         assertIsInstance(
-            get([dir + 'oracle_ec'], Trafo('etherchain').get()), tuple)
+            get([dir + 'oracle/1555718311_etherchain'], Trafo('etherchain').get()), tuple)
         assertIsInstance(get([dir + 'bk', dir + 'bkl'],
                              Trafo('block').get()), tuple)
 

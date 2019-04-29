@@ -25,10 +25,10 @@ class Transformer():
         tx['confirmed'] = self._get_unix_ts(tx['confirmed'])
         tx['gas_price'] = int(tx['gas_price'] / 1000000000)
         tx['hash'] = tx['hash'][0:6]
-        return tuple([tx[key] for key in self._get_columns('tx')])
+        return tuple([tx[key] for key in self.columns])
 
     def _etherchain(self, oracle):
-        return [oracle[key] for key in ['safeLow', 'standard', 'fast', 'fastest']]
+        return [oracle[key] for key in self.columns]
 
     def _ethGasStation(self, oracle):
         return [oracle[key] for key in self.columns]
