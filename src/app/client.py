@@ -5,7 +5,7 @@ from argparse import RawTextHelpFormatter
 from app.reader_fn import Reader_fn
 from app.reader_db import Reader_db
 from app.writer_csv import Writer_csv
-from app.transformer import Transformer
+from app.transformer import Transformer as Trafo
 from app.writer_db import Writer_db
 from app.query import Query
 
@@ -30,7 +30,6 @@ class Client():
         if (re.search('.sqlite3$', self.tgt)):
             self.w = Writer_db(self.tgt)
             self.r = Reader_fn()
-            self.trafo = Transformer()
         elif (re.search('.csv$', self.tgt)):
             self.w = Writer_csv()
             self.r = Reader_db(self.src)
@@ -40,11 +39,11 @@ class Client():
 
     def block2db(self):
         self._insert([
-            self.r.get((fn, fn + '_lgp'), self.trafo.block_trafo) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
+            self.r.get((fn, fn + '_lgp'), Trafo('block').get()) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
 
     def tx2db(self):
         self._insert([
-            self.r.get([fn], self.trafo.tx_trafo) for fn in glob.glob(self.src) if re.search('\/\d{7}-[a-z0-9]{7}$', fn)], 'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
+            self.r.get([fn], Trafo('tx').get()) for fn in glob.glob(self.src) if re.search('\/\d{7}-[a-z0-9]{7}$', fn)], 'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
 
     def oracle2db(self):
         self.etherchain2db()
@@ -52,13 +51,13 @@ class Client():
 
     def etherchain2db(self):
         rows = [
-            self.r.get([fn], self.trafo.oracle_ec_trafo) for fn in glob.glob(self.src) if re.search('\/\d{10}_etherchain$', fn)]
+            self.r.get([fn], Trafo('etherchain').get()) for fn in glob.glob(self.src) if re.search('\/\d{10}_etherchain$', fn)]
         self._insert(
             rows, 'INSERT OR IGNORE INTO etherchain VALUES (?,?,?,?,?)')
 
     def ethGasStation2db(self):
         rows = [
-            self.r.get([fn], self.trafo.oracle_egs_trafo) for fn in glob.glob(self.src) if re.search('\/\d{10}_ethgasstation$', fn)]
+            self.r.get([fn], Trafo('ethGasStation').get()) for fn in glob.glob(self.src) if re.search('\/\d{10}_ethgasstation$', fn)]
         self._insert(
             rows, 'INSERT OR IGNORE INTO ethGasStation VALUES (?,?,?,?,?,?)')
 
@@ -73,4 +72,4 @@ class Client():
 
 
 if __name__ == '__main__':
-    exec('Client().' + Client().func + '()')
+    getattr(Client(),  Client().func)()

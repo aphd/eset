@@ -1,4 +1,5 @@
 import sqlite3
+import re
 from app.query import Query
 
 
@@ -12,9 +13,9 @@ class Writer_db():
 
     def _create_db(self):
         q = Query()
-        self.cursor.execute(q.create_tx_tbl())
-        self.cursor.execute(q.create_block_tbl())
-        self.cursor.execute(q.create_ethGasStation_tbl())
+        funcs = [func for func in dir(q) if re.search('^create_', func)]
+        for func in funcs:
+            self.cursor.execute(getattr(q, func)())
         self.connection.commit()
 
     def insert(self, rows, sql_statement):
