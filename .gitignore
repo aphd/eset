@@ -1,7 +1,13 @@
 *.pyc
 tokens.py
+# ESEM default dir output
 src/data
 
 # jupyter notebook
 *ipynb*
 
+# visual studio code
+.vscode/
+
+# Apple macOS operating system
+.DS_Store

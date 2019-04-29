@@ -11,7 +11,6 @@ class Fetch_block(Fetch):
         self.block_id = str(block_id)
 
     def fetch_block(self):
-        print(self.config['API']['block'] + self.block_id)
         return self.curl(self.config['API']['block'] + self.block_id, self.block_id)
 
     def fetch_block_lowest_gas_price(self):
@@ -33,4 +32,7 @@ class Fetch_block(Fetch):
 
 
 if __name__ == '__main__':
-    Fetch_block(6545873).fetch_block_lowest_gas_price()
+    for block_id in range(7597743, 7601249):
+        fb = Fetch_block(block_id)
+        fb.fetch_block_lowest_gas_price()
+        fb.fetch_block()

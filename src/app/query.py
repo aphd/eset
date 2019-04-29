@@ -17,6 +17,19 @@ class Query:
             )
         '''
 
+    def create_etherchain_tbl(self):
+        return '''
+            CREATE TABLE IF NOT EXISTS etherchain
+            (
+                timestamp INTEGER,
+                safeLow INTEGER,
+                standard INTEGER,
+                fast INTEGER,
+                fastest INTEGER,
+                PRIMARY KEY (timestamp)
+            )
+        '''
+
     def create_tx_tbl(self):
         return '''
             CREATE TABLE IF NOT EXISTS tx
@@ -63,4 +76,17 @@ class Query:
             FROM
                 block
             ORDER BY height
+        '''
+
+    def get_oracles(self):
+        return '''
+            SELECT
+                    o1.timestamp, blockNum, o1.fastest as egs, o2.fastest as ec, lowest_gas_price
+            FROM
+                    ethgasstation as o1, etherchain as o2, block
+            WHERE
+                    o1.timestamp BETWEEN o2.timestamp -1 AND o2.timestamp +1
+                AND
+                    block.height = blockNum
+            ORDER BY o1.timestamp
         '''

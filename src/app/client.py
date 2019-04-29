@@ -1,30 +1,76 @@
+import glob
+import re
+import argparse
+from argparse import RawTextHelpFormatter
+from app.reader_fn import Reader_fn
+from app.reader_db import Reader_db
+from app.writer_csv import Writer_csv
+from app.transformer import Transformer
+from app.writer_db import Writer_db
+from app.query import Query
+
+
+class Client():
+
+    def __init__(self):
+        parser = argparse.ArgumentParser(
+            description='Client for the Empirical Study of Ethereum Transactions', usage='To write a sqlite file from a list of files:\n $> python app/client.py --src test/fixture/blocks/\* --tgt /tmp/db.sqlite3 --func block2db\n $> sqlite3 /tmp/db.sqlite3 \'select * from block\'\n\nTo write a csv file from a sqlite file:\n $> python app/client.py --src /tmp/db.sqlite3 --tgt /tmp/block.csv --func block2csv',
+            formatter_class=RawTextHelpFormatter)
+        parser.add_argument('--src', required=True,
+                            help='source')
+        parser.add_argument('--tgt', required=True,
+                            help='target')
+        parser.add_argument('--func', required=True,
+                            help='Client class method to run')
+        args = parser.parse_args()
+        self.src = args.src
+        self.tgt = args.tgt
+        self.func = args.func
+        # TODO to avoid  if-else, I should split the client in two parts
+        if (re.search('.sqlite3$', self.tgt)):
+            self.w = Writer_db(self.tgt)
+            self.r = Reader_fn()
+            self.trafo = Transformer()
+        elif (re.search('.csv$', self.tgt)):
+            self.w = Writer_csv()
+            self.r = Reader_db(self.src)
+
+    def _insert(self, rows, query):
+        self.w.insert([row for row in rows if row], query)
+
+    def block2db(self):
+        self._insert([
+            self.r.get((fn, fn + '_lgp'), self.trafo.block_trafo) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
+
+    def tx2db(self):
+        self._insert([
+            self.r.get([fn], self.trafo.tx_trafo) for fn in glob.glob(self.src) if re.search('\/\d{7}-[a-z0-9]{7}$', fn)], 'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
+
+    def oracle2db(self):
+        self.etherchain2db()
+        self.ethGasStation2db()
+
+    def etherchain2db(self):
+        rows = [
+            self.r.get([fn], self.trafo.oracle_ec_trafo) for fn in glob.glob(self.src) if re.search('\/\d{10}_etherchain$', fn)]
+        self._insert(
+            rows, 'INSERT OR IGNORE INTO etherchain VALUES (?,?,?,?,?)')
+
+    def ethGasStation2db(self):
+        rows = [
+            self.r.get([fn], self.trafo.oracle_egs_trafo) for fn in glob.glob(self.src) if re.search('\/\d{10}_ethgasstation$', fn)]
+        self._insert(
+            rows, 'INSERT OR IGNORE INTO ethGasStation VALUES (?,?,?,?,?,?)')
+
+    def oracle2csv(self):
+        self.w.write_txs(self.tgt, self.r.get(Query().get_oracles()))
+
+    def block2csv(self):
+        self.w.write_txs(self.tgt, self.r.get(Query().get_blocks()))
+
+    def tx2csv(self):
+        self.w.write_txs(self.tgt, self.r.get(Query().get_txs()))
+
+
 if __name__ == '__main__':
-    import glob
-    import re
-    import argparse
-    from app.reader_fn import Reader_fn
-    from app.transformer import Transformer
-    from app.writer_db import Writer_db
-
-    parser = argparse.ArgumentParser(description='...')
-    parser.add_argument('--dir', required=True, help='txs path (/tmp/txs/)')
-    parser.add_argument('--db', required=True, help='db name (db.sqlite3)')
-    w = Writer_db(parser.parse_args().db)
-    r = Reader_fn()
-
-    def insert_tx():
-        w.insert([
-            tx for tx in [
-                r.get([fn], Transformer().tx_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}-[a-z0-9]{7}$', fn)
-            ] if tx
-        ], 'INSERT OR IGNORE INTO tx VALUES (?,?,?,?,?,?,?,?)')
-
-    def insert_block():
-        w.insert([
-            block for block in [
-                r.get((fn, fn + '_lgp'), Transformer().block_trafo) for fn in glob.glob(parser.parse_args().dir + '*') if re.search('\/\d{7}$', fn)
-            ] if block
-        ], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
-
-    insert_block()
-    w.connection.close()
+    exec('Client().' + Client().func + '()')
