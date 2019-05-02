@@ -48,10 +48,28 @@ export PYTHONPATH="${PYTHONPATH}:app"
 cp app/tokens-sample.py app/tokens.py
 python3 -m unittest discover
 ```
-
-## Statistical data visualization
+## A descriptive analysis
 
 The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</a>.
+
+### Validation of the Oracle
+
+```bash
+bunzip2 block.csv.bz2
+```
+
+```python 
+import pandas as pd
+
+df = pd.read_csv('oracle.csv')
+df.describe()
+
+df_loc = loc[(df.lowest_gas_price > df.ec) & (df.lowest_gas_price > df.ec.shift(1))]
+df_loc.describe()
+```
+
+
+### Statistical data visualization
 
 ```bash
 bunzip2 txs.csv.bz2
