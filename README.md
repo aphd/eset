@@ -48,6 +48,12 @@ export PYTHONPATH="${PYTHONPATH}:app"
 cp app/tokens-sample.py app/tokens.py
 python3 -m unittest discover
 ```
+
+## Cron/Job scheduler 
+```bash 
+* * * * * cd ~/github/eset/src/; export PYTHONPATH="${PYTHONPATH}:app"; FN=fetch_oracle.py; /usr/bin/python3.6 app/$FN >> /tmp/$FN.log 2>&1
+```
+
 ## A descriptive analysis
 
 The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</a>.
