@@ -35,7 +35,7 @@ if __name__ == '__main__':
         return int(max(
             re.search('^(\d{7})', val)[0] for val in os.listdir('data/output-block')
         )) + 1
-    while True:
+    while True:  # TODO you should exit from the process when you get the maximum requests
         block_id = get_next_block_id()
         f = Fetch_tx(block_id)
         f_bck = Fetch_block(block_id)
