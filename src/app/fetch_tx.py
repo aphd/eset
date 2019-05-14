@@ -30,13 +30,12 @@ class Fetch_tx(Fetch):
 
 if __name__ == '__main__':
     from fetch_block import Fetch_block
-    import app.tokens as cfg
 
     def get_next_block_id():
         return int(max(
             re.search('^(\d{7})', val)[0] for val in os.listdir('data/output-block')
         )) + 1
-    for x in range(len(cfg.tokens) * 180):  # Each token can be used 200 times per hour
+    while True:  # TODO you should exit from the process when you get the maximum requests
         block_id = get_next_block_id()
         f = Fetch_tx(block_id)
         f_bck = Fetch_block(block_id)

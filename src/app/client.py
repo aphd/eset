@@ -26,7 +26,8 @@ class Client():
         self.src = args.src
         self.tgt = args.tgt
         self.func = args.func
-        # TODO to avoid  if-else, I should split the client in two parts
+        # TODO to avoid  if-else, I should split the client in two parts or create a abstract factory..because you need of different object not just one
+        # Actually, you you Writer_db or Writer_csv based on self.func, the extension can change a lot!
         if (re.search('.sqlite3$', self.tgt)):
             self.w = Writer_db(self.tgt)
             self.r = Reader_fn()
