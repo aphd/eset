@@ -104,6 +104,16 @@ ax = sns.boxplot(x)
 ax.set_xscale("log")
 ```
 
+### Generate descriptive statistics in latex
+
+```python 
+import pandas as pd
+
+df = pd.read_csv('txs.csv')
+
+print(((df.describe()).transpose()).to_latex())
+```
+
 ## References
 
 1. https://www.blockcypher.com/dev/ethereum/#blockchain
