@@ -74,6 +74,15 @@ df_loc = loc[(df.lowest_gas_price > df.ec) & (df.lowest_gas_price > df.ec.shift(
 df_loc.describe()
 ```
 
+```python 
+ec_oracle = pd.DataFrame({'op':df["ec"], 'oracle_name': 'ec'})
+egs_oracle = pd.DataFrame({'op':df["egs"]/10, 'oracle_name': 'egs'})
+oracles = ec_oracle.append(egs_oracle)
+
+ax = sns.violinplot(x="op", y= "oracle_name",  data=oracles)
+```
+<img src="https://user-images.githubusercontent.com/1194257/69757984-b0db9500-115e-11ea-9deb-844515ba80f8.png">
+
 
 ### Statistical data visualization
 
