@@ -75,13 +75,18 @@ df_loc.describe()
 ```
 
 ```python 
-ec_oracle = pd.DataFrame({'op':df["ec"], 'oracle_name': 'ec'})
-egs_oracle = pd.DataFrame({'op':df["egs"]/10, 'oracle_name': 'egs'})
+import pandas as pd
+import seaborn as sns
+import matplotlib as plt
+df = pd.read_csv('oracle.csv')
+ec_oracle = pd.DataFrame({'Gas Price (GWei)':df["ec"], 'Oracles': 'Ether Chain'})
+egs_oracle = pd.DataFrame({'Gas Price (GWei)':df["egs"]/10, 'Oracles': 'Ether Gas Station'})
 oracles = ec_oracle.append(egs_oracle)
-
-ax = sns.violinplot(x="op", y= "oracle_name",  data=oracles)
+sns.set(style="whitegrid", rc={'figure.figsize':(7,8)})
+ax = sns.violinplot( x="Oracles" ,  y="Gas Price (GWei)", data=oracles)
 ```
-<img src="https://user-images.githubusercontent.com/1194257/69757984-b0db9500-115e-11ea-9deb-844515ba80f8.png">
+
+![violin-plot](https://user-images.githubusercontent.com/1194257/69805030-1459d700-11e0-11ea-8867-d6a393c0e6c0.png)
 
 
 ### Statistical data visualization
