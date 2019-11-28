@@ -66,18 +66,17 @@ bunzip2 block.csv.bz2
 
 ```python 
 import pandas as pd
-
 df = pd.read_csv('oracle.csv')
-df.describe()
-
-df_loc = loc[(df.lowest_gas_price > df.ec) & (df.lowest_gas_price > df.ec.shift(1))]
-df_loc.describe()
+df['egs'] = df['egs']/10
+oracles = pd.DataFrame({'Ether Chain':df["ec"], 'Ether Gas Station': df["egs"]})
+print(((oracles.describe()).transpose()).to_latex())
 ```
+
+![table-latex](https://user-images.githubusercontent.com/1194257/69806671-baf3a700-11e3-11ea-837d-6a42525116b8.jpg)
 
 ```python 
 import pandas as pd
 import seaborn as sns
-import matplotlib as plt
 df = pd.read_csv('oracle.csv')
 ec_oracle = pd.DataFrame({'Gas Price (GWei)':df["ec"], 'Oracles': 'Ether Chain'})
 egs_oracle = pd.DataFrame({'Gas Price (GWei)':df["egs"]/10, 'Oracles': 'Ether Gas Station'})
