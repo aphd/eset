@@ -58,7 +58,7 @@ python3 -m unittest discover
 
 The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</a>.
 
-### Validation of the Oracle
+### Oracles data analysis
 
 ```bash
 bunzip2 block.csv.bz2
@@ -88,7 +88,7 @@ ax = sns.violinplot( x="Oracles" ,  y="Gas Price (GWei)", data=oracles)
 ![violin-plot](https://user-images.githubusercontent.com/1194257/69805030-1459d700-11e0-11ea-8867-d6a393c0e6c0.png)
 
 
-### Statistical data visualization
+### Transactions data analysis
 
 ```bash
 bunzip2 txs.csv.bz2
@@ -97,17 +97,28 @@ bunzip2 txs.csv.bz2
 ```python 
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-plt.figure(figsize=(16, 6))
+```
+
+```python 
+df = pd.read_csv('txs.csv')
+df = df[df.waiting_time > 15] # a tx needs to wait at least 1 block equals to 15 seconds
+df = df[df.waiting_time < 150] # outliners set to txs waiting more than 30 blocks
+df = df[df.gas_price < 10]
+txs_less_10 = pd.DataFrame({'Waiting time (sec)': df["waiting_time"], 'x': 'Gas Price < 10 Gwei'})
+
 
 df = pd.read_csv('txs.csv')
-df.describe()
+df = df[df.waiting_time > 15] # a tx needs to wait at least 1 block equals to 15 seconds
+df = df[df.waiting_time < 150] # outliners set to txs waiting more than 30 blocks
+df = df[df.gas_price > 10]
+txs_greater_10 = pd.DataFrame({'Waiting time (sec)': df["waiting_time"], 'x': 'Gas Price > 10 Gwei'})
 
-sns.set(style="whitegrid")
-ax = sns.violinplot(x=df["waiting_time"],  inner=None) 
-ax = sns.kdeplot(df["waiting_time"], shade=True, color="r")
-ax = sns.kdeplot(df["waiting_time"], df["gas_price"], shade=True)
+ax = sns.violinplot( y="Waiting time (sec)" , x="x", data=txs_less_10.append(txs_greater_10))
+```
 
+![tx-confirmation-time-vs-gas-price](https://user-images.githubusercontent.com/1194257/69864238-c2c45180-129e-11ea-8aef-f7008d2c255c.png)
+
+```python 
 df = pd.read_csv('block.csv')
 
 x=(df['fees']/10e+9)
