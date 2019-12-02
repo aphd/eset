@@ -136,6 +136,9 @@ import pandas as pd
 df = pd.read_csv('txs.csv')
 
 print(((df.describe()).transpose()).to_latex())
+
+# to suppress scientific notation
+print(((df.describe().apply(lambda s: s.apply(lambda x: format(x, 'g')))).transpose()).to_latex())
 ```
 
 ## References
