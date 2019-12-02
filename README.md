@@ -87,6 +87,25 @@ ax = sns.violinplot( x="Oracles" ,  y="Gas Price (GWei)", data=oracles)
 
 ![violin-plot](https://user-images.githubusercontent.com/1194257/69805030-1459d700-11e0-11ea-8867-d6a393c0e6c0.png)
 
+```python
+import pandas as pd
+df =pd.read_csv('/tmp/egsOracle.csv')
+
+df['fastest'] = df['fastest']/10
+df['fast'] = df['fast']/10
+df['safeLow'] = df['safeLow']/10
+df['average'] = df['average']/10
+
+egs_fastest = pd.DataFrame({'y':df["fastest"], 'x': 'fastest'})
+egs_fast = pd.DataFrame({'y':df["fast"], 'x': 'fast'})
+egs_safeLow = pd.DataFrame({'y':df["safeLow"], 'x': 'safeLow'})
+egs_average = pd.DataFrame({'y':df["average"], 'x': 'average'})
+
+sns.set(style="whitegrid", rc={'figure.figsize':(30,8)})
+ax = sns.violinplot( x="x" , y="y", data=egs_categories)
+```
+
+![categories violin plots](https://user-images.githubusercontent.com/1194257/69956244-c0acfd80-14ff-11ea-82fb-b805a31f0952.jpg)
 
 ### Transactions data analysis
 
