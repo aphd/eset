@@ -56,6 +56,7 @@ class Query:
                 size INTEGER,
                 n_tx INTEGER,
                 lowest_gas_price REAL,
+                block_time INTEGER,
                 PRIMARY KEY (height)
             )
         '''
@@ -72,7 +73,7 @@ class Query:
     def get_blocks(self):
         return '''
             SELECT
-                received_time, height, fees, size, n_tx, lowest_gas_price
+                received_time, height, fees, size, n_tx, lowest_gas_price, block_time
             FROM
                 block
             ORDER BY height
@@ -90,3 +91,23 @@ class Query:
                     block.height = blockNum
             ORDER BY o1.timestamp
         '''
+
+    def get_egs_oracle(self):
+        return '''
+            select * from ethGasStation order by timestamp
+        '''
+
+    def get_received_time_and_delta_from_block(self, height):
+        return '''
+            select %d, received_time, block_time from block where height = %d;
+        ''' % (height, height)
+
+    def get_block_count(self, start_time, end_time):
+        return ''' 
+            SELECT 
+                count(), gas_price, (confirmed-received)/15 
+            FROM 
+                tx 
+            WHERE 
+                received > %d and received < %d  group by gas_price order by gas_price;
+        ''' % (start_time, end_time)

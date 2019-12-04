@@ -16,23 +16,25 @@ class Fetch_block(Fetch):
     def fetch_block_lowest_gas_price(self):
         fn = self.curl(
             self.config['API']['block_lowest_gas_price'] + self.block_id, self.block_id + '_lgp')
-        lowest_gas_price = open(fn, 'r')
-        for line in lowest_gas_price.readlines():
+        fh = open(fn, 'r')
+        for line in fh.readlines():
             if 'Lowest Gas Price:' in line:
                 try:
                     lgp = re.search(
                         'Lowest Gas Price:</th><td>(\d+(\.\d{1,})?) GWei', line)[1]
-                    lowest_gas_price = open(fn, 'w')
+                    bt = re.search((' \(Mined in (\d{1,})s\)'), line)[1]
+                    fh = open(fn, 'w')
                     json.dump(
-                        {'id': self.block_id, 'lowest_gas_price': lgp}, lowest_gas_price)
+                        {'id': self.block_id, 'lowest_gas_price': lgp, 'block_time': bt}, fh)
                 except Exception as e:
                     print('Lowest Gas Price Exception:', e, ' fn:', fn)
-        lowest_gas_price.close()
+        fh.close()
         return fn
 
 
 if __name__ == '__main__':
-    for block_id in range(7597743, 7601249):
+    height = 7627920
+    for block_id in range(height, height + 1000):
         fb = Fetch_block(block_id)
         fb.fetch_block_lowest_gas_price()
         fb.fetch_block()

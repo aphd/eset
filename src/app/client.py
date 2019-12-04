@@ -40,7 +40,7 @@ class Client():
 
     def block2db(self):
         self._insert([
-            self.r.get((fn, fn + '_lgp'), Trafo('block').get()) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
+            self.r.get((fn, fn + '_lgp'), Trafo('block').get()) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?,?)')
 
     def tx2db(self):
         self._insert([
@@ -64,6 +64,9 @@ class Client():
 
     def oracle2csv(self):
         self.w.write_txs(self.tgt, self.r.get(Query().get_oracles()))
+
+    def egsOracle2csv(self):
+        self.w.write_txs(self.tgt, self.r.get(Query().get_egs_oracle()))
 
     def block2csv(self):
         self.w.write_txs(self.tgt, self.r.get(Query().get_blocks()))
