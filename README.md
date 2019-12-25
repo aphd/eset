@@ -147,6 +147,30 @@ ax = sns.boxplot(x)
 ax.set_xscale("log")
 ```
 
+### Block data analysis
+
+To calculate the block_time from the received_time variable of block, I calculated the difference between previous and current row.
+
+```sql
+SELECT
+    height , received_time, fees, size, n_tx, lowest_gas_price,
+    received_time - LAG ( received_time, 1, 0 ) OVER ( ORDER BY height ) block_time ,
+    height - LAG ( height, 1, 0 ) OVER ( ORDER BY height ) height_diff
+FROM
+    block 
+
+LIMIT 10
+OFFSET 1;
+
+SELECT
+    received_time, height, fees, size, n_tx, lowest_gas_price, block_time
+FROM
+    block
+ORDER BY height
+LIMIT 10
+OFFSET 1;
+```
+
 ### Generate descriptive statistics in latex
 
 ```python 
