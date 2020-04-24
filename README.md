@@ -78,8 +78,16 @@ sqlite> .quit
 
 ```r-programming
 df <- read.csv("/tmp/block.csv")
+
 str(df)
-ggplot(df, aes(y=n_tx, x="")) + geom_violin() + geom_boxplot(width=0.1)
+
+ggplot(df, aes(y=n_tx, x="")) 
+    + geom_violin() + geom_boxplot(width=0.1)
+
+
+ggplot(df, aes(y=fees, x="")) 
+    + geom_violin() + geom_boxplot(width=0.1) 
+    + scale_y_continuous(trans = "log10")
 ```
 
 ### Oracles data analysis
