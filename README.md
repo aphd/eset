@@ -56,7 +56,31 @@ python3 -m unittest discover
 
 ## A descriptive analysis
 
-The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</a>.
+The dataset is available to this link: <a href="https://zenodo.org/record/3584242#.XqK6itO38Wo">10.5281/zenodo.3584242</a>.
+
+### From sqlite to csv
+
+```bash
+wget https://zenodo.org/record/3584242/files/db.sqlite3.bz2?download=1
+bzip2 -d -v  /tmp/db.sqlite3.bz2
+sqlite3 /tmp/db.sqlite3
+```
+
+```sqlite
+sqlite> .headers on
+sqlite> .mode csv
+sqlite> .output block.csv
+sqlite> select * from block
+sqlite> .quit
+```
+
+### R analisys
+
+```r-programming
+df <- read.csv("/tmp/block.csv")
+str(df)
+ggplot(df, aes(y=n_tx, x="")) + geom_violin() + geom_boxplot(width=0.1)
+```
 
 ### Oracles data analysis
 
