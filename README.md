@@ -88,6 +88,11 @@ ggplot(df, aes(y=n_tx, x=""))
 ggplot(df, aes(y=fees, x="")) 
     + geom_violin() + geom_boxplot(width=0.1) 
     + scale_y_continuous(trans = "log10")
+    
+ggplot(df, aes(y=fees, x="")) 
+    + ylab("Fees (Wei)") + xlab("") 
+    + geom_violin() + geom_boxplot(width=0.1) 
+    + scale_y_continuous(trans = "log10")
 ```
 
 ### Oracles data analysis
