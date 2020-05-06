@@ -73,10 +73,11 @@ class Query:
     def get_blocks(self):
         return '''
             SELECT
-                received_time, height, fees, size, n_tx, lowest_gas_price, block_time
+                height , received_time, fees, size, n_tx, lowest_gas_price,
+                received_time - LAG ( received_time, 1, 0 ) OVER ( ORDER BY height ) block_time 
             FROM
-                block
-            ORDER BY height
+                block 
+            OFFSET 1;
         '''
 
     def get_oracles(self):
