@@ -56,7 +56,44 @@ python3 -m unittest discover
 
 ## A descriptive analysis
 
-The dataset is available to this <a href="https://www.dropbox.com/sh/r26h69swgyz9z75/AADeFqXchK5jqLjBzfKjeCsDa?dl=0">link</a>.
+The dataset is available to this link: <a href="https://zenodo.org/record/3584242#.XqK6itO38Wo">10.5281/zenodo.3584242</a>.
+
+### From sqlite to csv
+
+```bash
+wget https://zenodo.org/record/3584242/files/db.sqlite3.bz2?download=1
+bzip2 -d -v  /tmp/db.sqlite3.bz2
+sqlite3 /tmp/db.sqlite3
+```
+
+```sqlite
+sqlite> .headers on
+sqlite> .mode csv
+sqlite> .output block.csv
+sqlite> select * from block
+sqlite> .quit
+```
+
+### R analisys
+
+```r-programming
+df <- read.csv("/tmp/block.csv")
+
+str(df)
+
+ggplot(df, aes(y=n_tx, x="")) 
+    + geom_violin() + geom_boxplot(width=0.1)
+
+
+ggplot(df, aes(y=fees, x="")) 
+    + geom_violin() + geom_boxplot(width=0.1) 
+    + scale_y_continuous(trans = "log10")
+    
+ggplot(df, aes(y=fees, x="")) 
+    + ylab("Fees (Wei)") + xlab("") 
+    + geom_violin() + geom_boxplot(width=0.1) 
+    + scale_y_continuous(trans = "log10")
+```
 
 ### Oracles data analysis
 
@@ -145,6 +182,30 @@ x.describe()
 
 ax = sns.boxplot(x)
 ax.set_xscale("log")
+```
+
+### Block data analysis
+
+To calculate the block_time from the received_time variable of block, I calculated the difference between previous and current row.
+
+```sql
+SELECT
+    height , received_time, fees, size, n_tx, lowest_gas_price,
+    received_time - LAG ( received_time, 1, 0 ) OVER ( ORDER BY height ) block_time ,
+    height - LAG ( height, 1, 0 ) OVER ( ORDER BY height ) height_diff
+FROM
+    block 
+
+LIMIT 10
+OFFSET 1;
+
+SELECT
+    received_time, height, fees, size, n_tx, lowest_gas_price, block_time
+FROM
+    block
+ORDER BY height
+LIMIT 10
+OFFSET 1;
 ```
 
 ### Generate descriptive statistics in latex
