@@ -74,7 +74,7 @@ sqlite> select * from block
 sqlite> .quit
 ```
 
-### R analisys
+### R Programming analisys
 
 ```r-programming
 df <- read.csv("/tmp/block.csv")
@@ -93,6 +93,12 @@ ggplot(df, aes(y=fees, x=""))
     + ylab("Fees (Wei)") + xlab("") 
     + geom_violin() + geom_boxplot(width=0.1) 
     + scale_y_continuous(trans = "log10")
+```
+
+```
+
+with(df, hist(block_num[block_num >= 0 & block_num < 131], breaks=seq(0,130,by=1)))
+
 ```
 
 ### Oracles data analysis
