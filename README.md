@@ -98,8 +98,12 @@ ggplot(df, aes(y=fees, x=""))
 ```
 
 with(df, hist(block_num[block_num >= 0 & block_num < 131], breaks=seq(0,130,by=1)))
-
+with(df[df$gas_price >=20 & df$block_num >= 0, ] , hist(block_num[block_num >= 0 & block_num < 50], breaks=seq(0,50,by=1)))
 ```
+
+<img width="500" alt="Screenshot 2020-05-24 at 18 44 55" src="https://user-images.githubusercontent.com/1194257/82759603-c0c2f180-9dee-11ea-80ca-e79d98bfa0e2.png">
+
+
 
 ### Oracles data analysis
 
