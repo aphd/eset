@@ -36,3 +36,4 @@ if __name__ == '__main__':
     while True:
         fb.block_id = str(int(fb.block_id) + 1)
         fb.fetch_block()
+        fb.fetch_block_lowest_gas_price()
