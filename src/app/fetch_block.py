@@ -6,9 +6,9 @@ import json
 
 class Fetch_block(Fetch):
 
-    def __init__(self, block_id=False):
+    def __init__(self, block_id):
         super().__init__()
-        self.block_id = str(block_id)
+        self.block_id = max(os.listdir(self.output), default=block_id)
 
     def fetch_block(self):
         return self.curl(self.config['API']['block'] + self.block_id, self.block_id)
@@ -31,10 +31,8 @@ class Fetch_block(Fetch):
         fh.close()
         return fn
 
-
 if __name__ == '__main__':
-    height = 7627920
-    for block_id in range(height, height + 1000):
-        fb = Fetch_block(block_id)
-        fb.fetch_block_lowest_gas_price()
+    fb = Fetch_block(block_id=10000000)
+    while True:
+        fb.block_id = str(int(fb.block_id) + 1)
         fb.fetch_block()
