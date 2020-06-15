@@ -2,8 +2,6 @@ import traceback
 import json
 import re
 from app.reader import Reader
-from os import path
-
 
 class Reader_fn(Reader):
     def __init__(self):
