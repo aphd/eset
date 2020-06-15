@@ -1,11 +1,6 @@
-import traceback
-import json
-import re
-from app.reader import Reader
+import json, re, traceback
 
-class Reader_fn(Reader):
-    def __init__(self):
-        super().__init__()
+class Reader_fn():
 
     def get(self, fns, trafo):
         try:

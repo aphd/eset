@@ -1,8 +1,6 @@
 import sqlite3
-from app.reader import Reader
 
-
-class Reader_db(Reader):
+class Reader_db():
     def __init__(self, db_fn):
         self.connection = sqlite3.connect(db_fn)
         self.cursor = self.connection.cursor()
