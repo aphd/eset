@@ -34,13 +34,11 @@ class Transformer():
         return [oracle[key] for key in self.columns]
 
     def _block(self, block):
-        try:
-            block['lowest_gas_price'] = float(block['lowest_gas_price'])
-        except KeyError:
-            block['lowest_gas_price'] = 'Null'
+        block['lowest_gas_price'] = float(block['lowest_gas_price'])
         block['received_time'] = self._get_unix_ts(block['received_time'])
         block['fees'] = int(block['fees'] / 1000000000)
         return tuple([block[key] for key in self.columns])
 
     def get(self):
         return getattr(self, '_' + self.tbl_name)
+

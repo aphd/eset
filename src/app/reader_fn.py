@@ -12,7 +12,7 @@ class Reader_fn(Reader):
     def get(self, fns, trafo):
         try:
             dct = {}
-            for fn in [fn for fn in fns if path.exists(fn)]:
+            for fn in fns:
                 isTimestamp = re.search('\/(\d{10})_', fn)
                 if isTimestamp:
                     dct.update({'timestamp': isTimestamp.group(1)})
@@ -21,4 +21,3 @@ class Reader_fn(Reader):
         except Exception:
             print("******* File-Name ****** : ", fn)
             traceback.print_exc(limit=2)
-        return False
