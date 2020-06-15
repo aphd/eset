@@ -41,3 +41,4 @@ class Transformer():
 
     def get(self):
         return getattr(self, '_' + self.tbl_name)
+

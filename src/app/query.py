@@ -56,7 +56,6 @@ class Query:
                 size INTEGER,
                 n_tx INTEGER,
                 lowest_gas_price REAL,
-                block_time INTEGER,
                 PRIMARY KEY (height)
             )
         '''

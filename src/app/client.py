@@ -40,7 +40,7 @@ class Client():
 
     def block2db(self):
         self._insert([
-            self.r.get((fn, fn + '_lgp'), Trafo('block').get()) for fn in glob.glob(self.src) if re.search('\/\d{7}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?,?)')
+            self.r.get([fn, fn + '_lgp'], Trafo('block').get()) for fn in glob.glob(self.src) if re.search('\/\d{7,}$', fn)], 'INSERT OR IGNORE INTO block VALUES (?,?,?,?,?,?)')
 
     def tx2db(self):
         self._insert([
